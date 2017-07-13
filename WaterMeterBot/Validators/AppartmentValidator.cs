@@ -12,7 +12,7 @@
             {
                 var result = new ValidateResult { IsValid = true, Value = response };
                 var appartment = (response as string).Trim();
-                Regex regex = new Regex("^\\d{3}$");
+                Regex regex = new Regex("^\\d{1,3}$");
                 if (!regex.IsMatch(appartment))
                 {
                     result.Feedback = "Номер квартиры может содержать только цифры (не более 3 цифр).";
