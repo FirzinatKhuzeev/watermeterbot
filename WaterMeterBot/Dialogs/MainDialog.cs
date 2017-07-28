@@ -53,10 +53,21 @@
 
         public async Task StartFillingAsync(IDialogContext context)
         {
-            this.accountDetails = new AccountDetails();
-            var accountDetailsDialog = new FormDialog<AccountDetails>(this.accountDetails, AccountDetails.BuildAccountDetailsForm, FormOptions.PromptInStart);
+            var currentDate = DateTime.Now;
+            if (currentDate.Day == 23 || currentDate.Day == 24 || currentDate.Day == 25)
+            {
+                this.accountDetails = new AccountDetails();
+                var accountDetailsDialog = new FormDialog<AccountDetails>(this.accountDetails, AccountDetails.BuildAccountDetailsForm, FormOptions.PromptInStart);
 
-            context.Call(accountDetailsDialog, this.AfterAccountReceivedAsync);
+                context.Call(accountDetailsDialog, this.AfterAccountReceivedAsync);
+            }
+            else
+            {
+                var reply = context.MakeMessage();
+                reply.Text = "Внимание! Ввод показаний приборов учета воды доступен с 23 по 25 число каждого месяца.";
+                await context.PostAsync(reply);
+                context.Wait(MessageReceivedAsync);
+            }
         }
 
         public async Task AfterAccountReceivedAsync(IDialogContext context, IAwaitable<AccountDetails> result)

@@ -30,7 +30,7 @@
 
             if (bathroomMeters.Any())
             {
-                sb.AppendLine("<b>Ванная комната:</b>");
+                sb.AppendLine("<b>Ванная комната:</b><br/>");
                 foreach (var meter in bathroomMeters)
                 {
                     var type = meter.WaterType == WaterTypeOptions.HeatWaterSupply ? "ГВС" : "ХВС";
